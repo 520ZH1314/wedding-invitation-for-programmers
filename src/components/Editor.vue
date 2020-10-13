@@ -11,17 +11,30 @@
     <pre>
       <code v-html="highlightedCode"></code>
     </pre>
-    <!-- 打开邀请函 -->
-    <div
-      class="editor-open"
-      v-if="(canStart || hasClosed) && !canOpen"
-      @click="canOpen = true"
-    >
-      <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
-        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-        <line x1="9" y1="3" x2="9" y2="21"></line>
-      </svg>
+<!--    &lt;!&ndash; 打开邀请函 &ndash;&gt;-->
+<!--    <div-->
+<!--      class="editor-open"-->
+<!--      v-if="(canStart || hasClosed) && !canOpen"-->
+<!--      @click="canOpen = true"-->
+<!--    >-->
+<!--      <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">-->
+<!--        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>-->
+<!--        <line x1="9" y1="3" x2="9" y2="21"></line>-->
+<!--      </svg>-->
+<!--    </div>-->
+    <div class="buttom">
+      <div
+              class="editor-open"
+              v-if="(canStart || hasClosed) && !canOpen"
+              @click="canOpen = true"
+      >
+        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="9" y1="3" x2="9" y2="21"></line>
+        </svg>
+      </div>
     </div>
+
     <Executions :canExecute="canExecute" @onUpdating="scrollToBottom" @onFinish="canOpen = true"/>
     <invitation :canOpen="canOpen" @onClose="canOpen = false, hasClosed = true" @sendBarrage="onAfterSending"/>
     <Barrage :wish="wish" :canStart="canStart"/>
@@ -55,11 +68,18 @@
       }
     },
     created() {
+
       this.startDate = (new Date()).toDateString()
       this.progressivelyTyping()
+      // this.timer = setInterval(()=>{
+      //   // eslint-disable-next-line no-console
+      //   console.log("123");
+      // }, 1000);
+
     },
     updated() {
       this.scrollToBottom()
+
     },
     computed: {
       highlightedCode () {
@@ -111,6 +131,9 @@
         setTimeout(() => {
           this.canStart = true
         }, 800)
+      },
+      openImage(){
+        this.$router.push('/myimage')
       }
     }
   }
@@ -195,5 +218,6 @@
     background: #FFF1DE;
     z-index: 1000;
   }
+
 }
 </style>

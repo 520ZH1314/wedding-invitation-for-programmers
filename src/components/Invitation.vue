@@ -6,12 +6,12 @@
           <div class="content-inside">
             <img class="content-inside-photo" src="../images/photo.jpg">
             <p>我们结婚啦！</p>
-            <p><b>Jun & undefined</b></p>
-            <p>时间：invalid date value</p>
+            <p><b>钟慧 & 张家齐</b></p>
+            <p>时间：2020年11月11日</p>
             <p>地点：<b>location can not be found</b></p>
             <div class="content-inside-bless">
               <input
-                placeholder="写下你的祝福" 
+                placeholder="写下你的祝福"
                 @keyup.enter="sendBarrage"
                 @focus="isFocused = true"
                 @blur="isFocused = false, hasEntered = false"
@@ -19,11 +19,19 @@
                 ref="wishInput"
               >
               <p v-if="!wish && isFocused && hasEntered">请输入祝福哦</p>
-              <div>
-                <button @click="sendBarrage">发送祝福弹幕</button>
-                <button @click="closeInvitation">关闭</button>
+              <div class="sss">
+                <div>
+                  <button @click="sendBarrage">发送祝福弹幕</button>
+                  <button @click="closeInvitation">关闭</button>
+                </div>
+
               </div>
+              <div class="look">
+                <button @click="sendImage">查看相册</button>
+              </div>
+
             </div>
+
           </div>
         </div>
         <div class="cover-inside-left" :class="{'opening':isOpening}"></div>
@@ -41,6 +49,7 @@ export default {
     return {
       isOpening: false,
       wish: '',
+      num:'',
       isFocused: false,
       hasEntered: false
     }
@@ -48,7 +57,10 @@ export default {
   methods: {
     // 打开邀请函
     openInvitation(){
+
       this.isOpening = true
+      this.$bus.$emit('changeValue', 1)
+
     },
     closeInvitation () {
       this.isOpening = false
@@ -69,6 +81,9 @@ export default {
           this.$emit('sendBarrage', this.wish)
         }, 660)
       })
+    },
+    sendImage(){
+      this.$router.push('/myimage')
     }
   }
 }
@@ -161,8 +176,36 @@ export default {
                 &:-ms-input-placeholder { color: #E8D1B1;font-size: 12px; }
                 &:-moz-placeholder { color: #E8D1B1;font-size: 12px; }
               }
-              >div{
-                display: flex;
+              .sss{
+
+                >div{
+                  display: flex;
+                  button{
+                    width: 100%;
+                    height: 35px;
+                    color: #a9895d;
+                    background: #f7debb;
+                    border: none;
+                    outline: none;
+                    &:disabled{
+                      opacity: 0.8;
+                    }
+                    &:first-child{
+                      margin-right: 10px;
+                      flex: 1;
+                    }
+                    &:last-child{
+                      width: 60px;
+                      border: 1px solid #f7debb;
+                      background: transparent;
+                    }
+                  }
+                }
+
+              }
+              .look{
+                margin-top: 10px;
+                width: 100%;
                 button{
                   width: 100%;
                   height: 35px;
@@ -170,18 +213,7 @@ export default {
                   background: #f7debb;
                   border: none;
                   outline: none;
-                  &:disabled{
-                    opacity: 0.8;
-                  }
-                  &:first-child{
-                    margin-right: 10px;
-                    flex: 1;
-                  }
-                  &:last-child{
-                    width: 60px;
-                    border: 1px solid #f7debb;
-                    background: transparent;
-                  }
+
                 }
               }
             }
@@ -243,5 +275,6 @@ export default {
         }
       }
     }
+
   }
 </style>
